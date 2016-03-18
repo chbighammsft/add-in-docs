@@ -9,8 +9,9 @@ by adding buttons or drop-down menus. This lets users access add-ins in a simple
 and unobtrusive way. Because they offer increased functionality in a seamless manner, you 
 can use add-in commands to create more engaging solutions.
 
-Add-in commands are only available for Contextual add-ins that do not use 
-[ItemHasAttachment](https://msdn.microsoft.com/en-us/library/fp123567.aspx%28Office.15%29.aspx), [ItemHasKnownEntity](https://msdn.microsoft.com/en-us/library/fp161166.aspx%28Office.15%29.aspx), 
+Add-in commands are only available for contextual add-ins that do not use 
+[ItemHasAttachment](https://msdn.microsoft.com/en-us/library/fp123567.aspx%28Office.15%29.aspx), 
+[ItemHasKnownEntity](https://msdn.microsoft.com/en-us/library/fp161166.aspx%28Office.15%29.aspx), 
 or [ItemHasRegularExpressionMatch](https://msdn.microsoft.com/en-us/library/fp142215.aspx%28Office.15%29.aspx) 
 rules to limit the types of items they activate on. However, contextual add-ins can present 
 different commands depending on whether the currently selected item is a message or 
