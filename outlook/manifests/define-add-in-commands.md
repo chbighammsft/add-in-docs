@@ -4,14 +4,23 @@ Use the  **VersionOverrides** element in your Outlook add-in manifest to define 
 
  _**Applies to:** apps for Office | Office Add-ins | Outlook_
 
-To support add-in commands, some additional elements have been added to the add-in manifest v1.1 within the  **VersionOverrides** element.. When a manifest contains the **VersionOverrides** element, versions of Outlook that support add-in commands will use the information within that element to load the add-in. Older versions of Outlook that do not support add-in commands will ignore the element and continue to use the old elements as described in [Outlook add-in manifests](../outlook/manifests/manifests.md).
+To support add-in commands, some additional elements have been added to the add-in manifest 
+v1.1 within the  **VersionOverrides** element.. When a manifest contains the 
+**VersionOverrides** element, versions of Outlook that support add-in commands will use 
+the information within that element to load the add-in. Older versions of Outlook that do 
+not support add-in commands will ignore the element and continue to use the old elements 
+as described in [Outlook add-in manifests](../outlook/manifests/manifests.md).
 
-When the client application recognizes the  **VersionOverrides** node, the add-in name appears in the ribbon, not in the read/compose pane. The add-in won't appear in both places.
+When the client application recognizes the  **VersionOverrides** node, the add-in name 
+appears in the ribbon, not in the read/compose pane. The add-in won't appear in both places.
  
 
 ## VersionOverrides element
 
-The  **VersionOverrides** element is the root element that contains information for the add-in commands implemented by the add-in. It is supported in manifest schema v1.1 or later but is defined in the VersionOverrides v1.0 schema. The attributes for **VersionOverrides** are as follows.
+The  **VersionOverrides** element is the root element that contains information for the 
+add-in commands implemented by the add-in. It is supported in manifest schema v1.1 or 
+later but is defined in the VersionOverrides v1.0 schema. The attributes for 
+**VersionOverrides** are as follows.
 
 
 |
@@ -60,9 +69,16 @@ Here an example of  **VersionOverrides**, showing its child elements.
 
 ## FormFactor element
 
-The  **FormFactor** element specifies the settings for an add-in for a given form factor. It is a child node under **Hosts** / **Host**. Currently, it can only specify the desktop ( **DesktopFormFactor**). It contains all the add-in information for that form factor except for the  **Resources** node.
+The  **FormFactor** element specifies the settings for an add-in for a given form factor. 
+It is a child node under **Hosts** / **Host**. Currently, it can only specify the desktop 
+( **DesktopFormFactor**). It contains all the add-in information for that form factor 
+except for the  **Resources** node.
 
-The form factor contains the  **FunctionFile** element and one or more **ExtensionPoint** elements. For more information see the following [FunctionFile element](#VersionOverrides10_FunctionFile) and [ExtensionPoint element](#VersionOverrides10_ExtensionPoint) sections. The following is an example of **FormFactor**, showing its child nodes.
+The form factor contains the  **FunctionFile** element and one or more **ExtensionPoint** 
+elements. For more information see the following 
+[FunctionFile element](#VersionOverrides10_FunctionFile) and 
+[ExtensionPoint element](#VersionOverrides10_ExtensionPoint) sections. The following is 
+an example of **FormFactor**, showing its child nodes.
 
 
 
@@ -121,7 +137,10 @@ function trackMessage (event) {
 ## ExtensionPoint element
 
 
-The  **ExtensionPoint** element defines where an add-in exposes functionality. It is a child element under **FormFactor**. For each form factor, developers can define **ExtensionPoint** elements with the following **xsi:type** values:
+The  **ExtensionPoint** element defines where an add-in exposes functionality. It is a 
+child element under **FormFactor**. For each form factor, developers can define 
+**ExtensionPoint** elements with the following **xsi:type** values, with the exception
+of the **Module** value which can only be used in the **DesktopFormFactor**:
 
 
 - CustomPane 
@@ -129,6 +148,8 @@ The  **ExtensionPoint** element defines where an add-in exposes functionality. I
 - MessageReadCommandSurface 
     
 - MessageComposeCommandSurface 
+
+- Module
     
 - AppointmentOrganizerCommandSurface 
     
@@ -274,8 +295,14 @@ Where the  **id** attribute is a string with a maximum of 125 characters and the
 |**Action**|Required. Specifies the action to perform when the user selects the button. It is defined by the following.
 |||
 |:-----|:-----|
-|**xsi:type**|This attribute specifies the kind of action performed when the user selects the button. It can be one of the following
-<ul xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mtps="http://msdn2.microsoft.com/mtps" xmlns:mshelp="http://msdn.microsoft.com/mshelp" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:msxsl="urn:schemas-microsoft-com:xslt"><li><p>"ExecuteFunction"</p></li><li><p>"ShowTaskpane"</p></li></ul>|
+|**xsi:type**|This attribute specifies the kind of action performed when the user selects 
+the button. It can be one of the following
+<ul xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mtps="http://msdn2.microsoft.com/mtps" xmlns:mshelp="http://msdn.microsoft.com/mshelp" xmlns:ddue="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+<li><p>"ExecuteFunction"</p></li>
+<li><p>"ShowTaskpane"</p></li>
+</ul>
+
+Module extensions only support the "ExecuteFunction" action.|
 |**FunctionName**|Required element when  **xsi:type** is "ExecuteFunction". Specifies the name of the function to execute. The function is contained in the file specified in the **FunctionFile** element.|
 |**SourceLocation**|Required element when  **xsi:type** is "ShowTaskpane". Specifies the source file location for this action. The **resid** attribute must be set to the value of the **id** attribute of a **Url** element in the **Urls** element in the **Resources** element.|
 |
@@ -303,10 +330,8 @@ The following is an example of a  _UI-less button_, which executes a function na
 
 ```
 
-A  _task pane button_ control is a button that launches a task pane. Task pane buttons do not support toggles. The following is an example of a task pane button.
-
-
-
+A  _task pane button_ control is a button that launches a task pane. Task pane buttons 
+do not support toggles. The following is an example of a task pane button.
 
 ```
 <Control xsi:type="Button" id="msgReadOpenPaneButton">
@@ -407,18 +432,25 @@ The following is an example of a menu.
 
 ### MessageComposeCommandSurface
 
-This puts buttons on the ribbon for add-ins using mail compose form. It is defined the same as for MessageReadCommandSurface.
+This puts buttons on the ribbon for add-ins using mail compose form. It is defined the 
+same as for MessageReadCommandSurface.
 
 
 ### AppointmentOrganizerCommandSurface
 
-This puts buttons on the ribbon for the form that's displayed to the organizer of the meeting. It is defined the same as for MessageReadCommandSurface.
+This puts buttons on the ribbon for the form that's displayed to the organizer of the 
+meeting. It is defined the same as for MessageReadCommandSurface.
 
 
 ### AppointmentAttendeeCommandSurface
 
-This puts buttons on the ribbon for the form that's displayed to the attendee of the meeting. It is defined the same as for MessageReadCommandSurface.
+This puts buttons on the ribbon for the form that's displayed to the attendee of the 
+meeting. It is defined the same as for MessageReadCommandSurface.
 
+### Module
+
+This puts buttons on the ribbon for the module extension. It is defined the same as for 
+MessageReadCommandSurface.
 
 ## Resources element
 
