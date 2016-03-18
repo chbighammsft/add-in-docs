@@ -30,3 +30,110 @@ navigation bar and has ribbon commands that will update the content of the add-i
 
 ![Shows the user interface of a module extension](../images/outlook-module-extension.png)
 
+The following is a section of a manifest file that definces a module extension.
+
+    <!-- Add Outlook module extension point -->
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
+                      xsi:type="VersionOverridesV1_0">
+       <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+                         xsi:type="VersionOverridesV1_1">
+
+         <!-- Begin override of existing elements -->
+         <Description resid="residVersionOverrideDesc" />
+    
+         <Requirements>
+           <bt:Sets DefaultMinVersion="1.3">
+              <bt:Set Name="Mailbox" />
+            </bt:Sets>
+          </Requirements>
+          <!-- End override of existing elements -->
+
+          <Hosts>
+            <Host xsi:type="MailHost">
+              <DesktopFormFactor>
+                <!-- Set the URL of the file that contains the
+                     JavaScript function that controls the extension -->
+                <FunctionFile resid="residFunctionFileUrl" />
+    
+                <!--New Extension Point - Module for a ModuleApp -->
+                <ExtensionPoint xsi:type="Module">
+                  <SourceLocation resid="residExtensionPointUrl" />
+                  <Label resid="residExtensionPointLabel" />
+    
+                  <CommandSurface>
+                    <CustomTab id="idTab">
+                      <Group id="idGroup">
+                        <Label resid="residGroupLabel" />
+    
+                        <Control xsi:type="Button" id="group.changeToAssociate">
+                          <Label resid="residChangeToAssociateLabel" />
+                          <Supertip>
+                            <Title resid="residChangeToAssociateLabel" />
+                            <Description resid="residChangeToAssociateDesc" />
+                          </Supertip>
+                          <Icon>
+                            <bt:Image size="16" resid="residAssociateIcon16" />
+                            <bt:Image size="32" resid="residAssociateIcon32" />
+                            <bt:Image size="80" resid="residAssociateIcon80" />
+                          </Icon>
+                          <Action xsi:type="ExecuteFunction">
+                            <FunctionName>changeToAssociateRate</FunctionName>
+                          </Action>
+                        </Control>
+                        
+                    </Group>
+                      <Label resid="residCustomTabLabel" />
+                    </CustomTab>
+                  </CommandSurface>
+                </ExtensionPoint>
+              </DesktopFormFactor>
+            </Host>
+          </Hosts>
+    
+          <Resources>
+            <bt:Images>
+              <bt:Image id="residAddinIcon16" 
+                        DefaultValue="https://localhost:8080/Executive-16.png" />
+              <bt:Image id="residAddinIcon32" 
+                        DefaultValue="https://localhost:8080/Executive-32.png" />
+              <bt:Image id="residAddinIcon80" 
+                        DefaultValue="https://localhost:8080/Executive-80.png" />
+            
+              <bt:Image id="residAssociateIcon16" 
+                        DefaultValue="https://localhost:8080/Associate-16.png" />
+              <bt:Image id="residAssociateIcon32" 
+                        DefaultValue="https://localhost:8080/Associate-32.png" />
+              <bt:Image id="residAssociateIcon80" 
+                        DefaultValue="https://localhost:8080/Associate-80.png" />
+            </bt:Images>
+    
+            <bt:Urls>
+              <bt:Url id="residFunctionFileUrl" 
+                      DefaultValue="https://localhost:8080/" />
+              <bt:Url id="residExtensionPointUrl" 
+                      DefaultValue="https://localhost:8080/" />
+            </bt:Urls>
+    
+            <!--Short strings must be less than 30 characters long -->
+            <bt:ShortStrings>
+              <bt:String id="residExtensionPointLabel" 
+                         DefaultValue="Billable Hours" />
+              <bt:String id="residGroupLabel" 
+                         DefaultValue="Change billing rate" />
+              <bt:String id="residCustomTabLabel" 
+                         DefaultValue="Billable hours" />
+    
+              <bt:String id="residChangeToAssociateLabel" 
+                         DefaultValue="Associate" />
+            </bt:ShortStrings>
+    
+            <bt:LongStrings>
+              <bt:String id="residVersionOverrideDesc" 
+                         DefaultValue="Version override description" />
+    
+              <bt:String id="residChangeToAssociateDesc" 
+                         DefaultValue="Change to the associate billing rate: $127/hr" />
+            </bt:LongStrings>
+          </Resources>
+        </VersionOverrides>
+      </VersionOverrides>
